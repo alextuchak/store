@@ -1,5 +1,5 @@
 from django.db import models
-
+from users.models import User
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=128)
@@ -19,3 +19,13 @@ class Products(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    product = models.ForeignKey(to=Products, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Корзина для {self.user.username}"

@@ -1,5 +1,21 @@
 from django.contrib import admin
-from products.models import ProductCategory, Products
+from products.models import ProductCategory, Products, Basket
 
-admin.site.register(Products)
+
 admin.site.register(ProductCategory)
+
+
+@admin.register(Products)
+class ProductsAdmin(admin.ModelAdmin):
+    list_display = ['name', 'price', 'quantity', 'category']
+    fields = ['name', 'descriptions', 'price', 'quantity', 'image', 'category']
+    readonly_fields = []
+    search_fields = ['name']
+    ordering = ['name']
+
+
+class BasketAdmin(admin.TabularInline):
+    model = Basket
+    fields = ('product', 'quantity', 'created_at')
+    readonly_fields = ('created_at',)
+    extra = 0

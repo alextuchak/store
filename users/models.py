@@ -1,9 +1,10 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
+from django.db import models
 from django.urls import reverse
-from store_stepik.settings import DOMAIN_NAME
 from django.utils.timezone import now
+
+from store_stepik.settings import DOMAIN_NAME, EMAIL_HOST_USER
 
 
 class User(AbstractUser):
@@ -22,14 +23,14 @@ class EmailVerification(models.Model):
 
     def send_verification_email(self):
         verification_link = f"{DOMAIN_NAME}" \
-                            f"{reverse('users:email_verification', kwargs={'email': self.user.email,'code': self.code})}"
+                        f"{reverse('users:email_verification', kwargs={'email': self.user.email,'code': self.code})}"
         subject = f"Подтверждение учетной записи для {self.user.username}"
         message = "Для подтверждения учетной записи для {} перейдите по ссылке: {}".format(
             self.user.email, verification_link)
         send_mail(
             subject=subject,
             message=message,
-            from_email="12",
+            from_email=EMAIL_HOST_USER,
             recipient_list=[self.user.email],
             fail_silently=False
         )

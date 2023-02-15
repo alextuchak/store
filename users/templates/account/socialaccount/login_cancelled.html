@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Login Cancelled" %}{% endblock %}
+
+{% block social_auth %}
+    <div class="card shadow-lg border-0 rounded-lg mt-5">
+        <div class="card-header">
+            <h3 class="text-center font-weight-light my-2">
+                Авторизация отменена</h3>
+        </div>
+        <div class="card-body">
+            <h5 class="text-center font-weight-light my-1">
+                {% blocktrans %}You decided to cancel logging in to our site using one of your existing accounts.
+                    If this was a mistake, please proceed to{% endblocktrans %}</h5>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+

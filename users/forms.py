@@ -52,6 +52,12 @@ class UserProfileForm(UserChangeForm):
     username = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control py-4", 'readonly': True}))
     email = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control py-4", 'readonly': True}))
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if len(User.objects.get(username=self.instance).email) == 0:
+            self.fields["email"] = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control py-4"}))
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'image', 'username', 'email']
+

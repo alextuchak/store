@@ -9,6 +9,18 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-7">
+        {% if messages or no_email %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 50px;">
+                {% if no_email %}
+                    {{ no_email }}
+                {% else %}
+                    {{ messages }}
+                {% endif %}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endif %}
             <h4 class="mt-3 mb-3">Профиль</h4>
             <div class="col-lg-12 text-center">
                 <img width="100" height="100"

@@ -21,20 +21,6 @@ class EmailVerification(models.Model):
     def __str__(self):
         return f'EmailVerification object for {self.user.email}'
 
-    def send_verification_email(self):
-        verification_link = f"{DOMAIN_NAME}" \
-                        f"{reverse('users:email_verification', kwargs={'email': self.user.email,'code': self.code})}"
-        subject = f"Подтверждение учетной записи для {self.user.username}"
-        message = "Для подтверждения учетной записи для {} перейдите по ссылке: {}".format(
-            self.user.email, verification_link)
-        send_mail(
-            subject=subject,
-            message=message,
-            from_email=EMAIL_HOST_USER,
-            recipient_list=[self.user.email],
-            fail_silently=False
-        )
-
     def is_expired(self):
         return True if now() >= self.expiration else False
 

@@ -1,17 +1,13 @@
 from django.contrib.auth.views import LoginView, TemplateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.mail import send_mail
 from django.shortcuts import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-import uuid
-from datetime import timedelta
-from django.utils.timezone import now
 from common.views import TitleMixin
 from users.forms import UserLoginForm, UserProfileForm, UserRegistrationForm
 from users.models import EmailVerification, User
-from store_stepik.settings import DOMAIN_NAME, EMAIL_HOST_USER
+from users.tasks import send_email_verification
 
 
 class UserLoginView(TitleMixin, LoginView):
@@ -72,18 +68,5 @@ class EmailVerificationView(TitleMixin, TemplateView):
 
 @login_required
 def send_verification_email(request, *args, **kwargs):
-    user = request.user
-    record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=now() + timedelta(days=2))
-    verification_link = f"{DOMAIN_NAME}" \
-                        f"{reverse('users:email_verification', kwargs={'email': user.email, 'code': record.code})}"
-    subject = f"Подтверждение учетной записи для {user.username}"
-    message = "Для подтверждения учетной записи для {} перейдите по ссылке: {}".format(
-        user.email, verification_link)
-    send_mail(
-        subject=subject,
-        message=message,
-        from_email=EMAIL_HOST_USER,
-        recipient_list=[user.email],
-        fail_silently=False
-    )
+    send_email_verification.delay(request.user.id)
     return HttpResponseRedirect(reverse('index'))

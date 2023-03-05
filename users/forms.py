@@ -53,6 +53,12 @@ class UserProfileForm(UserChangeForm):
         if len(User.objects.get(username=self.instance).email) == 0:
             self.fields["email"] = forms.CharField(widget=forms.TextInput(attrs={"class": "form-control py-4"}))
 
+    def save(self, commit=True):
+        user = super(UserProfileForm, self).save(commit=True)
+        if 'email' in self.changed_data:
+            send_email_verification.delay(self.instance.id)
+        return user
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'image', 'username', 'email']

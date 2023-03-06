@@ -9,7 +9,7 @@ from users.models import User
 class BasketTestCase(TestCase):
 
     def setUp(self) -> None:
-        self.product = baker.make(Products, _quantity=1)
+        self.product = baker.make(Products, _quantity=1, image='media/products_images/Adidas-hoodie.png')
         self.user = baker.make(User, _quantity=1)
         self.basket = baker.make(Basket, user=self.user[0])
 

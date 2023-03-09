@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.core.cache import cache
 
 from common.views import TitleMixin
 from products.models import Basket, ProductCategory, Products
@@ -40,6 +41,9 @@ def basket_add(request, product_id):
         basket = basket.first()
         basket.quantity += 1
         basket.save()
+    cashed_basket = cache.get(request.user.username + '_basket')
+    if cashed_basket:
+        cache.delete(request.user.username + '_basket')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
@@ -47,4 +51,7 @@ def basket_add(request, product_id):
 def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
+    cashed_basket = cache.get(request.user.username + '_basket')
+    if cashed_basket:
+        cache.delete(request.user.username + '_basket')
     return HttpResponseRedirect(request.META['HTTP_REFERER'])

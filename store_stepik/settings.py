@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.yandex',
     'products',
     'users',
+    'debug_toolbar',
 
 ]
 
@@ -64,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'store_stepik.urls'
@@ -87,6 +89,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'store_stepik.wsgi.application'
 
+INTERNAL_IPS = [
+
+    '127.0.0.1',
+    'localhost'
+]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -133,7 +150,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
 AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
 AWS_STORAGE_BUCKET_NAME = 'stepik-store'
@@ -141,6 +158,7 @@ AWS_S3_ENDPOINT_URL = 'https://storage.yandexcloud.net'
 DEFAULT_FILE_STORAGE = 'store_stepik.s3_storage.MediaStorage'
 STATICFILES_STORAGE = 'store_stepik.s3_storage.StaticStorage'
 STATIC_URL = AWS_S3_ENDPOINT_URL + AWS_STORAGE_BUCKET_NAME + 'static/'
+STATICFILES_DIRS = ['static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -191,6 +209,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 }
 
-#Celery
+# Celery
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
-CELERY_RESULT_BACKEDN = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+
+# Debug toolbar
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)

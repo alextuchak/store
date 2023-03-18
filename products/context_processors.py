@@ -4,6 +4,8 @@ from django.core.cache import cache
 
 def baskets(request):
     user = request.user
+    if user.is_anonymous:
+        return {'baskets': []}
     cache_baskets = cache.get(user.username + '_baskets')
     if not cache_baskets:
         user_baskets = Basket.objects.filter(user=user)

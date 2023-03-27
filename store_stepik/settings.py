@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'allauth.socialaccount.providers.yandex',
     'products',
+    'orders',
     'users',
     'debug_toolbar',
 

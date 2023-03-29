@@ -1,5 +1,6 @@
 {% extends 'products/base.html' %}
 {% load static cache%}
+{% load humanize %}
 
 {% block css %}
 <link href="{% static 'vendor/css/product.css'%}" rel="stylesheet" />
@@ -16,55 +17,42 @@
 
             <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
                 <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src='{{ product.image.url }}' />
+                    </div>
+                    {% for image in gallery %}
                   <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                    <img src='{{ image.image.url }}' />
                   </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
+                    {% endfor %}
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
             <div thumbsSlider="" class="swiper mySwiper">
                 <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src='{{ product.image.url }}' />
+                    </div>
+                  {% for image in gallery %}
                   <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                    <img src='{{ image.image.url }}' />
                   </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
-                  <div class="swiper-slide">
-                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
-                  </div>
+                    {% endfor %}
                 </div>
             </div>
 
         </div>
 
         <div class="col-lg-4 offset-lg-1">
-            <div class="card h-100">
+            <div class="card ">
                   <div class="card-body"><!-- Начало текстового контента -->
-                        <h4 class="card-title">Заголовок карточки</h4>
-                        <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карточки</h6>
-                        <p class="card-text">Некоторый текст...</p>
-                        <a href="#" class="card-link">Первая ссылка</a>
-                        <a href="#" class="card-link">Вторая ссылка</a>
+                        <h4 class="card-title">{{ product.descriptions }}</h4>
+                        <p class="card-text">{{ product.full_descriptions }}</p>
+                        <p class="card-text">Стоимость {{ product.price|intcomma }} руб.</p>
                   </div><!-- Конец текстового контента -->
                   <div class="card-footer text-center">
-                                <a class="btn btn-outline-success" href="">
+                                <a class="btn btn-outline-success" href="{% url 'products:basket_add' product.id %}">
                                     Добавить в корзину
                                 </a>
                   </div>

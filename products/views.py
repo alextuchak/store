@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.core.cache import cache
 
 from common.views import TitleMixin
-from products.models import Basket, ProductCategory, Products
+from products.models import Basket, ProductCategory, Products, ProductsGallery
 
 
 class IndexView(TitleMixin, TemplateView):
@@ -33,6 +33,12 @@ class ProductsListView(TitleMixin, ListView):
 class ProductView(ListView):
     model = Products
     template_name = 'products/product.html'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductView, self).get_context_data()
+        context['gallery'] = ProductsGallery.objects.filter(product=self.kwargs['product_id'])
+        context['product'] = context['object_list'][0]
+        return context
 
 
 @login_required

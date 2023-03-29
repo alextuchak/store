@@ -1,0 +1,113 @@
+{% extends 'products/base.html' %}
+{% load static cache%}
+
+{% block css %}
+<link href="{% static 'vendor/css/product.css'%}" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-7">
+
+            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <div thumbsSlider="" class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                  <div class="swiper-slide">
+                    <img src='{% static "vendor/img/slides/slide-1.jpg" %}' />
+                  </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4 offset-lg-1">
+            <div class="card h-100">
+                  <div class="card-body"><!-- Начало текстового контента -->
+                        <h4 class="card-title">Заголовок карточки</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Подзаголовок карточки</h6>
+                        <p class="card-text">Некоторый текст...</p>
+                        <a href="#" class="card-link">Первая ссылка</a>
+                        <a href="#" class="card-link">Вторая ссылка</a>
+                  </div><!-- Конец текстового контента -->
+                  <div class="card-footer text-center">
+                                <a class="btn btn-outline-success" href="">
+                                    Добавить в корзину
+                                </a>
+                  </div>
+                </div><!-- Конец карточки -->
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".mySwiper", {
+      spaceBetween: 10,
+      slidesPerView: 4,
+      freeMode: true,
+      watchSlidesProgress: true,
+    });
+    var swiper2 = new Swiper(".mySwiper2", {
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      thumbs: {
+        swiper: swiper,
+      },
+    });
+  </script>
+
+{% endblock %}
+
+
+{% block footer%}
+
+    <footer class="py-5 my-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; Store 2023</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+
+{% endblock %}

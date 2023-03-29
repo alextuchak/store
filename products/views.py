@@ -30,6 +30,11 @@ class ProductsListView(TitleMixin, ListView):
         return queryset.filter(category_id=category_id) if category_id else queryset
 
 
+class ProductView(ListView):
+    model = Products
+    template_name = 'products/product.html'
+
+
 @login_required
 def basket_add(request, product_id):
     product = Products.objects.get(id=product_id)

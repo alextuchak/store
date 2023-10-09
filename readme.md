@@ -16,7 +16,7 @@ https://github.com/alextuchak/store.git
 
 ```
 
-docker-compose up -d
+docker-compose up
 
 ```
 
@@ -24,7 +24,7 @@ docker-compose up -d
 
 ```
 
-docker exec -i deploy-postgres-1 psql -U products_owner -d products < /deploy/postgres/categories_dump.sql
+docker exec -i store-postgres-1 psql -U products_owner -d products < deploy/postgres/categories_dump.sql
 
 ```
 

@@ -33,10 +33,8 @@ ALLOWED_HOSTS = [
     "*"
 ]
 
-if DEBUG:
-    DOMAIN_NAME = 'http://dev.stepik.store.ru'
-else:
-    DOMAIN_NAME = os.environ['DOMAIN_NAME']
+
+DOMAIN_NAME = os.environ['DOMAIN_NAME']
 # Application definition
 
 INSTALLED_APPS = [

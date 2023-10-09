@@ -16,7 +16,7 @@ class IndexView(TitleMixin, TemplateView):
 class ProductsListView(TitleMixin, ListView):
     model = Products
     template_name = 'products/products.html'
-    paginate_by = 3
+    paginate_by = 6
     title = 'Store - каталог'
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -37,7 +37,7 @@ class ProductView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductView, self).get_context_data()
         context['gallery'] = ProductsGallery.objects.filter(product=self.kwargs['product_id'])
-        context['product'] = context['object_list'][0]
+        context['product'] = context['object_list'].get(id=self.kwargs['product_id'])
         return context
 
 

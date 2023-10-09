@@ -34,7 +34,7 @@ ALLOWED_HOSTS = [
 ]
 
 if DEBUG:
-    DOMAIN_NAME = 'http://127.0.0.1:8000'
+    DOMAIN_NAME = 'http://dev.stepik.store.ru'
 else:
     DOMAIN_NAME = os.environ['DOMAIN_NAME']
 # Application definition
@@ -103,7 +103,7 @@ INTERNAL_IPS = [
 ]
 
 if DEBUG:
-    REDIS_HOST = '127.0.0.1'
+    REDIS_HOST = 'redis'
     REDIS_PORT = '6379'
 else:
     REDIS_HOST = os.getenv('REDIS_HOST')
@@ -127,7 +127,7 @@ DATABASES = {
         'NAME': os.environ['POSTGRES_DB'],
         'USER': os.environ['POSTGRES_USER'],
         'PASSWORD': os.environ['POSTGRES_PASSWORD'],
-        'HOST': 'localhost',
+        'HOST': 'postgres',
         'PORT':  os.environ['DATABASE_PORT'],
     }
 }
@@ -165,20 +165,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATICFILES_DIRS = (BASE_DIR / 'static',)
-if not DEBUG:
-    AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-    AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-    AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-    AWS_S3_ENDPOINT_URL = os.environ['AWS_S3_ENDPOINT_URL']
-    DEFAULT_FILE_STORAGE = 'store_stepik.s3_storage.MediaStorage'
-    STATICFILES_STORAGE = 'store_stepik.s3_storage.StaticStorage'
-    STATIC_URL = AWS_S3_ENDPOINT_URL + AWS_STORAGE_BUCKET_NAME + '/static/'
-    MEDIA_URL = AWS_S3_ENDPOINT_URL + AWS_STORAGE_BUCKET_NAME + '/media/'
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = BASE_DIR / 'media'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_ENDPOINT_URL = os.environ['AWS_S3_ENDPOINT_URL']
+DEFAULT_FILE_STORAGE = 'store_stepik.s3_storage.MediaStorage'
+STATICFILES_STORAGE = 'store_stepik.s3_storage.StaticStorage'
+STATIC_URL = AWS_S3_ENDPOINT_URL + AWS_STORAGE_BUCKET_NAME + '/static/'
+MEDIA_URL = AWS_S3_ENDPOINT_URL + AWS_STORAGE_BUCKET_NAME + '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

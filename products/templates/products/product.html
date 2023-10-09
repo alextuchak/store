@@ -48,6 +48,7 @@
             <div class="card ">
                   <div class="card-body"><!-- Начало текстового контента -->
                         <h4 class="card-title">{{ product.descriptions }}</h4>
+                        <h6 class="card-subtitle mb-2 text-muted">Бренд {{ product.manufacturer }}</h6>
                         <p class="card-text">{{ product.full_descriptions }}</p>
                         <p class="card-text">Стоимость {{ product.price|intcomma }} руб.</p>
                   </div><!-- Конец текстового контента -->
